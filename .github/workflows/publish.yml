@@ -2,9 +2,8 @@ name: Publish resume
 
 on:
   push:
-    branches: [ "main" ]
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+    tags:
+      - '*'
 
 permissions:
   contents: write
@@ -26,9 +25,8 @@ jobs:
         with:
           name: PDF
           path: "*.pdf"
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        if: github.ref_type == 'tag'
+      - name: GH Release
+        uses: softprops/action-gh-release@v2.4.1
         with:
           name: "${{ github.ref_name }}"
           files: Matthias-Green-Resume.pdf
