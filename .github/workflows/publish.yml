@@ -6,6 +6,8 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+permissions:
+  contents: write
 
 jobs:
   build_typst_documents:
@@ -17,8 +19,16 @@ jobs:
         uses: lvignoli/typst-action@main
         with:
           source_file: main.typ
+      - name: Rename output
+        run: mv main.pdf Matthias-Green-Resume.pdf
       - name: Upload PDF file
         uses: actions/upload-artifact@v4
         with:
-          name: Matthias Green resume
+          name: PDF
           path: "*.pdf"
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: github.ref_type == 'tag'
+        with:
+          name: "${{ github.ref_name }}"
+          files: Matthias-Green-Resume.pdf
