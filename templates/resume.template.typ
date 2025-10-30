@@ -64,7 +64,7 @@ and creates the header and footer for the resume.
   pad(
     top: 0.25em,
     align(center)[
-      #smallcaps[#contacts.join("  |  ")]
+      #contacts.join("  |  ")
     ],
   )
 
@@ -133,7 +133,7 @@ Skills section formatting, responsible for collapsing individual entries into a 
 */
 #let skills(areas) = {
   for area in areas {
-    strong[#area.at(0): ]
+    strong[#area.at(0)$thin$: ]
     area.at(1).join(" | ")
     linebreak()
   }
